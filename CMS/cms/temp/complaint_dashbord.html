@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Boxicons -->
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+          integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+
+    <!-- My CSS -->
+    <link rel="stylesheet" href="../statics/css/complaint_dashbord.css">
+
+    <title>Base</title>
+</head>
+<body>
+<!-- SIDEBAR -->
+<section id="sidebar">
+    <a href="#" class="brand">
+        <i class="fa-solid fa-layer-group"></i>
+        <span class="text">Admin</span>
+    </a>
+    <ul class="side-menu top">
+        <li class="active">
+            <a href="#">
+                <i class="fa-solid fa-border-all"></i>
+                <span class="text">Complaint Dashboard</span>
+            </a>
+        </li>
+        <li>
+            <a href="../temp/manageuser_dashbord.html">
+                <i class="fa-solid fa-computer"></i>
+                <span class="text">Manage User</span>
+            </a>
+        </li>
+    </ul>
+    <ul class="side-menu">
+        <li>
+            <a href="#">
+                <i class="fa-solid fa-gear"></i>
+                <span class="text">Settings</span>
+            </a>
+        </li>
+        <li>
+            <a href="{{ url_for('logout') }}" class="logout">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                <span class="text">Logout</span>
+            </a>
+        </li>
+    </ul>
+</section>
+<!-- SIDEBAR -->
+
+<!-- CONTENT -->
+<section id="content">
+
+    <!-- NAVBAR -->
+    <nav>
+        <i class='bx bx-menu' style="cursor: pointer;"></i> <!-- Sidebar Toggle with Pointer Cursor -->
+
+        <!-- CMS Heading -->
+        <div class="cms-title">
+            <h2>CMS</h2>
+        </div>
+
+        <!-- Profile Image with Dropdown -->
+        <div class="profile-dropdown">
+            <a href="#" class="profile" id="profileImage">
+                <img src="../img/profile.jpg" alt="Profile Image">
+            </a>
+            <!-- Submenu for Profile Image -->
+            <div class="dropdown-content" id="profileDropdown">
+                <a href="#">User</a>
+                <a href="#">Admin</a>
+                <a href="#">Super User</a>
+            </div>
+        </div>
+    </nav>
+    <!-- NAVBAR -->
+
+    <!-- MAIN -->
+    <main>
+        <!-- Main title -->
+        <div class="head-title">
+            <div class="left">
+                <h1>Dashboard</h1>
+            </div>
+            <div>
+                <a href="{{ url_for('download_excel') }}" class="btn-download">
+                    <i class="fa-solid fa-download"></i>
+                    <span class="text">Download PDF</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Cards -->
+        <div class="cardBox">
+            <div id="all-Complaints" class="card">
+                <div>
+                    <div class="numbers">All <br> Complaints</div>
+                    <div class="cardName">Total {{ total_reports }}</div>
+                </div>
+                <div class="iconBx">
+                    <ion-icon name="eye-outline"><i class="fa-solid fa-folder-open"></i></ion-icon>
+                </div>
+            </div>
+
+            <div id="Solved" class="card">
+                <div>
+                    <div class="numbers">Solved <br> Complaints</div>
+                    <div class="cardName">Total {{ solved_reports }}</div>
+                </div>
+                <div class="iconBx">
+                    <ion-icon name="cart-outline"><i class="fa-solid fa-check"></i></ion-icon>
+                </div>
+            </div>
+
+            <div id="Pending" class="card">
+                <div>
+                    <div class="numbers">Pending <br> Complaints</div>
+                    <div class="cardName">Feedback {{ pending_reports }}</div>
+                </div>
+                <div class="iconBx">
+                    <ion-icon name="chatbubbles-outline"><i class="fa-regular fa-clock"></i></ion-icon>
+                </div>
+            </div>
+
+            <div class="card" onclick="window.location.href='{{ url_for("report") }}';">
+                <div>
+                    <div class="numbers">New <br> Application</div>
+                </div>
+                <div class="iconBx">
+                    <ion-icon name="eye-outline"><i class="fa-solid fa-pencil"></i></ion-icon>
+                </div>
+            </div>
+        </div>
+        <!-- == Cards == -->
+
+        <!-- table-data -->
+        <div class="table-data">
+            <div class="order">
+                <div class="head">
+                    <h3>Recent complaints</h3>
+                    <i class='bx bx-search' ></i>
+                    <i class='bx bx-filter' ></i>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>User-Name</th>
+                            <th>Designation of User</th>
+                            <th>Department</th>
+                            <th>Date Of Complaint</th>
+                            <th>Time Of Complaint</th>
+                            <th>Status </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                        {% for report in reports %}
+                        <tr onclick="window.location.href='{{ url_for("report_details", report_id=report.Rid) }}';">
+                            <td>{{ report.user.Name }}</td>
+                            <td>Lab-Assistant </td>
+                            <td>{{ report.department }}</td>
+                            <td>{{ report.date.strftime('%d-%m-%Y') }}</td>
+                            <td>{{ report.date.strftime('%H:%M') }}</td>
+                            <td><span class="status {% if report.solved_date %} completed {% else %} pending {% endif %}"> {% if report.solved_date %} Completed {% else %} Pending {% endif %}</span></td>
+                        </tr>
+                        {% endfor %}
+
+                        <tr>
+                            <td>John Doe </td>
+                            <td>Lab-Assistant </td>
+                            <td>IT </td>
+                            <td>01-10-2021</td>
+                            <td>10 : 50 Am</td>
+                            <td><span class="status completed"><a href="../temp/complaintreport_page.html">Completed</a></span></td>
+                        </tr>
+
+                        <tr>
+                            <td>John Doe </td>
+                            <td>Lab-Assistant </td>
+                            <td>IT </td>
+                            <td>01-10-2021</td>
+                            <td>10 : 50 Am</td>
+                            <td><span class="status pending">Pending</a></span></td>
+                        </tr>
+
+                        <tr>
+                            <td>John Doe </td>
+                            <td>Lab-Assistant </td>
+                            <td>IT </td>
+                            <td>01-10-2021</td>
+                            <td>10 : 50 Am</td>
+                            <td><span class="status completed">Completed</a></span></td>
+                        </tr>
+
+                        <tr>
+                            <td>John Doe </td>
+                            <td>Lab-Assistant </td>
+                            <td>IT </td>
+                            <td>01-10-2021</td>
+                            <td>10 : 50 Am</td>
+                            <td><span class="status process">process</a></span></td>
+                        </tr>
+
+                        <tr>
+                            <td>John Doe </td>
+                            <td>Lab-Assistant </td>
+                            <td>IT </td>
+                            <td>01-10-2021</td>
+                            <td>10 : 50 Am</td>
+                            <td><span class="status pending">Pending</a></span></td>
+                        </tr>
+
+                        <tr>
+                            <td>John Doe </td>
+                            <td>Lab-Assistant </td>
+                            <td>IT </td>
+                            <td>01-10-2021</td>
+                            <td>10 : 50 Am</td>
+                            <td><span class="status completed">Completed</a></span></td>
+                        </tr>
+
+                        <tr>
+                            <td>John Doe </td>
+                            <td>Lab-Assistant </td>
+                            <td>IT </td>
+                            <td>01-10-2021</td>
+                            <td>10 : 50 Am</td>
+                            <td><span class="status completed">Completed</a></span></td>
+                        </tr>
+
+                        <tr>
+                            <td>John Doe </td>
+                            <td>Lab-Assistant </td>
+                            <td>IT </td>
+                            <td>01-10-2021</td>
+                            <td>10 : 50 Am</td>
+                            <td><span class="status process">process</a></span></td>
+                        </tr>
+
+                        <tr>
+                            <td>John Doe </td>
+                            <td>Lab-Assistant </td>
+                            <td>IT </td>
+                            <td>01-10-2021</td>
+                            <td>10 : 50 Am</td>
+                            <td><span class="status completed">Completed</a></span></td>
+                        </tr>
+
+                        <tr>
+                            <td>John Doe </td>
+                            <td>Lab-Assistant </td>
+                            <td>IT </td>
+                            <td>01-10-2021</td>
+                            <td>10 : 50 Am</td>
+                            <td><span class="status pending">Pending</a></span></td>
+                        </tr>
+                        
+                    </tbody>
+                </table>
+            </div> 
+        </div>
+        <!-- == Table-data == -->
+
+    </main>
+    <!-- == main == -->
+</section>
+<!-- == section == -->
+
+<script src="../statics/js/complaint_dashbord.js"></script>
+</body>
+</html>
