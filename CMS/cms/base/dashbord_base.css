@@ -283,6 +283,12 @@ body {
     color: var(--dark);
 }
 
+#content main .head-title .btn-group{
+    display: flex;
+    grid-gap: 10px;
+    flex-wrap: wrap;
+}
+
 #content main .head-title .btn-download {
     height: 50px;
     padding: 0 30px;

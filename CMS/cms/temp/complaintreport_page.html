@@ -11,12 +11,13 @@
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
 
     <!-- My CSS -->
+    <link rel="stylesheet" href="../base/dashbord_base.css">
     <link rel="stylesheet" href="../statics/css/complaintreport_page.css">
 
-    <title>Report</title>
+    <title>complaintreport_page</title>
 </head>
 <body>
-<!-- SIDEBAR -->
+<!-- SIDEBAR Section -->
 <section id="sidebar">
     <a href="#" class="brand">
         <i class="fa-solid fa-layer-group"></i>
@@ -51,12 +52,12 @@
         </li>
     </ul>
 </section>
-<!-- SIDEBAR -->
+<!-- END SIDEBAR Section -->
 
-<!-- CONTENT -->
+<!-- CONTENT Section -->
 <section id="content">
 
-    <!-- NAVBAR -->
+    <!-- NAVBAR Section -->
     <nav>
         <i class='bx bx-menu' style="cursor: pointer;"></i> <!-- Sidebar Toggle with Pointer Cursor -->
 
@@ -78,14 +79,14 @@
             </div>
         </div>
     </nav>
-    <!-- NAVBAR -->
+    <!-- END NAVBAR Section -->
 
-    <!-- MAIN -->
+    <!-- MAIN Content Section -->
     <main>
-        <!-- Main title -->
+        <!-- Main title Section -->
         <div class="head-title">
             <div class="left">
-                <h1>Report</h1>
+                <h1>Complaint Report</h1>
             </div>
             <div>
                 <a href="{{ url_for('download_excel') }}" class="btn-download">
@@ -95,171 +96,115 @@
             </div>
         </div>
 
-
-
-
-
+        <!-- Main content Section -->
         <div class="table-data">
             <div class="order">
-                
-            <div id="form"> 
+                <!-- Form Section -->
+                <div id="form"> 
+                    <!-- First Row of Form -->
+                    <div class="first-row">
+                        <!-- Report ID Section -->
+                        <div class="location">
+                            <div class="title">Report Id : </div>
+                            <input class="input-text" type="text" value="{{ report.Rid }}" disabled>
+                        </div>
 
+                        <!-- Complaint Date Section -->
+                        <div class="location">
+                            <div class="title">Complain Date : </div>
+                            <input class="input-text" type="text" value="{{ report.date.strftime('%d-%m-%Y %H:%M') }}" disabled>
+                        </div>
 
-                 <div class="first-row">
+                        <!-- Department Section -->
+                        <div class="location">
+                            <div class="title">Department : </div>
+                            <input class="input-text" type="text" value="{{ report.department }}" disabled>
+                        </div>
 
-                    <div class="location">
-                        <div class="title">Report Id : </div>
-                        <input class=input-text type="text" value="{{ report.Rid }}" disabled>
+                        <!-- Problem Type Section -->
+                        <div class="location">
+                            <div class="title">Problem Type : </div>
+                            <input class="input-text" type="text" value="{{ report.problem_type }}" disabled>
+                        </div>
+
+                        <!-- Location Section -->
+                        <div class="location">
+                            <div class="title">Location : </div>
+                            <input class="input-text" type="text" value="{{ report.location }}" disabled>
+                        </div>
+
+                        <!-- 5S-Tag Section -->
+                        <div class="location">
+                            <div class="title">5S-Tag : </div>
+                            <input class="input-text" type="text" value="{{ report._5stag }}" disabled>
+                        </div>
+
+                        <!-- User Name Section -->
+                        <div class="location">
+                            <div class="title">User-Name : </div>
+                            <input class="input-text" type="text" value="{{ report.user.Name }}" disabled>
+                        </div>
+
+                        <!-- User Department Section -->
+                        <div class="location">
+                            <div class="title">User-Department : </div>
+                            <input class="input-text" type="text" value="{{ report.user.department }}" disabled>
+                        </div>
+
+                        <!-- Solver Name Section -->
+                        <div class="location">
+                            <div class="title">Solver-Name : </div>
+                            <input class="input-text" type="text" value="{{ report.solver.Name }}" disabled>
+                        </div>
+
+                        <!-- Solver Date Section -->
+                        <div class="location">
+                            <div class="title">Solver-Date : </div>
+                            <input class="input-text" type="text" value="{{ report.solved_date.strftime('%d-%m-%Y %H:%M') }}" disabled>
+                        </div>
+
+                        <!-- Status Section -->
+                        <div class="location">
+                            <div class="title">Status: </div>
+                            <input class="input-text" type="text" value="Pending" disabled>
+                        </div>
                     </div>
 
-                    <div class="location">
-                        <div class="title">Complain Date : </div>
-                        <input class=input-text type="text" value="{{ report.date.strftime('%d-%m-%Y %H:%M') }}" disabled>
-                    </div>
-
-                    <div class="location">
-                        <div class="title">Department : </div>
-                        <input class=input-text type="text" value="{{ report.department }}" disabled>
-                    </div>
-
-                    <div class="location">
-                        <div class="title">problem-type : </div>
-                        <input class=input-text type="text" value="{{ report.problem_type }}" disabled>
-                    </div>
-
-                    <div class="location">
-                        <div class="title">Location : </div>
-                        <input class=input-text type="text" value="{{ report.location }}" disabled>
-                    </div>
-
-                    <div class="location">
-                        <div class="title">5s-Tag : </div>
-                        <input class=input-text type="text" value="{{ report._5stag }}" disabled>
-                    </div>
-                 
-
-
-                    <div class="location">
-                        <div class="title">User-Name : </div>
-                        <input class=input-text type="text" value="{{ report.user.Name }}" disabled>
-                    </div>
-
-                    <div class="location">
-                        <div class="title">User-Department : </div>
-                        <input class=input-text type="text" value="{{ report.user.department }}" disabled>
-                    </div>
-
-                    <div class="location">
-                        <div class="title">User-Designation: </div>
-                        <input class=input-text type="text" value="{{ report.user.designation }}" disabled>
+                    <!-- Problem Description Section -->
+                    <div class="Problem-Description">
+                        <div class="title">Problem-Description : </div>
+                        <textarea class="input-problem" name="comment" rows="2" cols="202" disabled>{{ report.description }}</textarea>
                     </div>
 
                     {% if report.solved_date %}
-
-                    <div class="location">
-                        <div class="title">Solver-Name : </div>
-                        <input class=input-text type="text" value="{{ report.solver.Name }}" disabled>
+                    <!-- Note By Department Section -->
+                    <div class="Problem-Description">
+                        <div class="title">Note By Department : </div>
+                        <textarea class="input-problem" name="comment" rows="1" cols="120"></textarea>
                     </div>
-
-                    <div class="location">
-                        <div class="title">Solver-Date : </div>
-                        <input class=input-text type="text" value="{{ report.solved_date.strftime('%d-%m-%Y %H:%M') }}" disabled>
-                    </div>
-
                     {% else %}
-
-                    <div class="location">
-                        <div class="title">Status: </div>
-                        <input class=input-text type="text" value="Pending" disabled>
-                    </div>
-
+                    {% if current_user.roll == 'Maintenance' and current_user.roll == report.department %}
                     {% endif %}
-                 
-                 
-                    
-                    
+                    {% endif %}
 
-                
-                  
-                </div>
-                    
+                    <!-- Submit Button Section -->
+                    <button class="btn" id="submit" type="submit" onclick="openPopup()">Submit</button>
 
-                
-
-                
-                  
-                    
-                
-
-                <div class="Problem-Description">
-                    <div class="title">Problem-Description : </div>
-                    <textarea class=input-problem name="comment" rows="2" cols="202" disabled>{{ report.description }}</textarea>
-                </div>
-
-                {% if report.solved_date %}
-
-                <div class="Problem-Description">
-                    <div class="title">Note By Department : </div>
-                    <textarea class=input-problem name="comment" rows="1" cols="120"></textarea>
-                </div>
-
-                {% else %}
-                {% if current_user.roll == 'Maintenance' and current_user.roll == report.department %}
-
-                <div class="rating-cover">
-                    <form action="#">
-                        <div class="rating-head">
-                        <h3>Add note:</h3>
-
-                        <div class="rating">
-                            <input type="number" name="rating" hidden>
-                            <i class='bx bx-star star' style="--i: 0;"></i>
-                            <i class='bx bx-star star' style="--i: 1;"></i>
-                            <i class='bx bx-star star' style="--i: 2;"></i>
-                            <i class='bx bx-star star' style="--i: 3;"></i>
-                            <i class='bx bx-star star' style="--i: 4;"></i>
-                        </div>
+                    <!-- Popup Section -->
+                    <div class="pop-up" id="popup">
+                        <img src="404-tick.png" alt="">
+                        <h2>Thank You!</h2>
+                        <p>Your Application has been successfully submitted. Thank you!</p>
+                        <button type="button" onclick="closePopup()">OK</button>
                     </div>
-                        <textarea id="textarea-reting" name="opinion" cols="30" rows="1" value="Your opinion..."></textarea>
-                        <div class="btn-group">
-                            <button type="submit" class="btn submit">Submit</button>
-                            <button class="btn cancel">Cancel</button>
-                        </div>
-                    </form>
-                </div>
-                {% endif %}
-    {% endif %}
-
-                <button class="btn" id="submit" type="submit" onclick="openPopup()">Submit</button>
-                    
-                <div class="pop-up" id="popup">
-                    <img src="404-tick.png" alt="">
-                    <h2>Thank You!</h2>
-                    <p>Your Application has been succefully submited. Thank!</p>
-                    <button type="button" onclick="closePopup()">OK</button>
-                </div>
-
-
-                
-
-                
-            </div>	
-            </div>
-
-
-            
-                        
-                    </div>
-
-
-
-
-
-
+                </div>	
+                <!-- END Form Section -->
+            </div>                
+        </div>
     </main>
-    <!-- == main == -->
+    <!-- END MAIN Content Section -->
 </section>
-<!-- == section == -->
+<!-- END CONTENT Section -->
 
 <script src="../base/dashbord_base.js"></script>
 </body>
